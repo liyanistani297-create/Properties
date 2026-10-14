@@ -93,7 +93,7 @@ public abstract class HotDrink : Drink
     {
         Temperature = temperature;
     }
-    public double CalculatePrice ()
+    public  virtual double CalculatePrice ()//הפעולה הזו הופכת להיות ברירת מחדל לכל מי שיורש ממנה. כלומר אם לא משנים את המחיר או את הטיפ אז הוא בא לפה.
     {
         return Price *1.1;
     }
@@ -118,6 +118,34 @@ public abstract class HotDrink : Drink
         {
             NumShots = numShots;
         }
+
+        public class Affogato : Espresso
+        {
+            private int numIceCreamBalls;
+
+            public int NumIceCreamBalls
+            {
+                get { return numIceCreamBalls; }
+                set
+                {
+                    if (value >= 1)
+                        numIceCreamBalls = value;
+                }
+            }
+
+            public Affogato(string name, int price, int volume,
+                            double temperature, int numIceCreamBalls)
+                : base(name, price, volume, temperature, 1)
+            {
+                NumIceCreamBalls = numIceCreamBalls;
+            }
+
+            public override double CalculatePrice()
+            {
+                return base.CalculatePrice () + NumIceCreamBalls * 5;
+            }
+        }
+
     }
 
     internal class Home_Work
